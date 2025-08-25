@@ -18,10 +18,11 @@ dependencies:
   share_plus: ^11.0.0
   logger: ^2.5.0
   shared_preferences: ^2.5.3
-  flutter_pdfview: ^1.4.0+1
+  # flutter_pdfview: ^1.4.0+1
   path_provider: ^2.1.5
   in_app_update: ^4.2.3
   scrollable_positioned_list: ^0.3.8
+  pdfx: ^2.9.2
 
 dev_dependencies:
   flutter_test:
