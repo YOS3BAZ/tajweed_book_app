@@ -62,8 +62,9 @@ class BookScreen extends StatelessWidget {
             ),
             Obx(
               () => DarkModeButton(
-                  isDarkMode: controller.isDarkMode.value,
-                  onPressed: controller.toggleDarkMode),
+                isDarkMode: controller.isDarkMode.value,
+                onPressed: controller.toggleDarkMode,
+              ),
             ),
             const Tooltip(
               message: AppTexts.search,
@@ -115,22 +116,22 @@ class BookScreen extends StatelessWidget {
                         children: [
                           const SizedBox(width: AppSizes.xs),
                           IconButton(
-                            tooltip: AppTexts.next,
-                            icon: const Icon(Iconsax.arrow_circle_down),
-                            color: AppColors.white,
-                            style: IconButton.styleFrom(
-                              backgroundColor: Colors.black26,
-                            ),
-                            onPressed: () => controller.nextPage(),
-                          ),
-                          IconButton(
                             tooltip: AppTexts.previous,
-                            icon: const Icon(Iconsax.arrow_circle_up),
+                            icon: const Icon(Iconsax.arrow_circle_right),
                             color: AppColors.white,
                             style: IconButton.styleFrom(
                               backgroundColor: Colors.black26,
                             ),
                             onPressed: () => controller.previousPage(),
+                          ),
+                          IconButton(
+                            tooltip: AppTexts.next,
+                            icon: const Icon(Iconsax.arrow_circle_left),
+                            color: AppColors.white,
+                            style: IconButton.styleFrom(
+                              backgroundColor: Colors.black26,
+                            ),
+                            onPressed: () => controller.nextPage(),
                           ),
                           const Spacer(),
                           Obx(
@@ -149,7 +150,7 @@ class BookScreen extends StatelessWidget {
                                 color: AppColors.third,
                               ),
                               label: Text(
-                                '${controller.currentPage.value + 1} ${AppTexts.from} ${controller.totalPages.value}',
+                                '${controller.currentPage.value} ${AppTexts.from} ${controller.totalPages.value}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
