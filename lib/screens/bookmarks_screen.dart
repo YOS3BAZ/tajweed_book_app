@@ -63,14 +63,14 @@ class BookmarksScreen extends StatelessWidget {
                       title: Text(
                         item.id > 0
                             ? _fahrasList[item.id - 1].title
-                            : "رقم الصفحة: ${item.pageNumber + 1}",
+                            : "رقم الصفحة: ${item.pageNumber}",
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: AppColors.primary,
                               fontWeight: FontWeight.bold,
                               height: AppSizes.fontLineHight,
                             ),
                       ),
-                      subtitle: Text("رقم الصفحة: ${item.pageNumber + 1}"),
+                      subtitle: Text("رقم الصفحة: ${item.pageNumber}"),
                       trailing: IconButton(
                         onPressed: () {
                           AppServices.instance.removeBookmark(item.pageNumber);
