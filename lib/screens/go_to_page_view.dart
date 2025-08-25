@@ -31,6 +31,7 @@ class GoToPageView extends StatelessWidget {
                 children: [
                   TextFormField(
                     controller: inputController,
+                    textInputAction: TextInputAction.go,
                     keyboardType: const TextInputType.numberWithOptions(
                       signed: true,
                       decimal: false,
@@ -66,6 +67,16 @@ class GoToPageView extends StatelessWidget {
                       ),
                       labelStyle: Theme.of(context).textTheme.bodyMedium,
                     ),
+                    onFieldSubmitted: (value) {
+                      if (formState.currentState?.validate() == true) {
+                        final int? pageNumber =
+                            int.tryParse(inputController.text);
+                        if (pageNumber != null) {
+                          controller.jumpToPage(pageNumber);
+                        }
+                        Get.back();
+                      }
+                    },
                   ),
                   const SizedBox(height: AppSizes.defaultSpace),
                   SizedBox(
@@ -92,7 +103,7 @@ class GoToPageView extends StatelessWidget {
                           final int? pageNumber =
                               int.tryParse(inputController.text);
                           if (pageNumber != null) {
-                            controller.jumpToPage(pageNumber - 1);
+                            controller.jumpToPage(pageNumber);
                           }
                           Get.back();
                         }
