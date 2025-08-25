@@ -8,21 +8,21 @@ class AppLists {
 
   // Menu List
   static const List<MenuModel> homeMenu = [
-    MenuModel(
-      id: 1,
-      title: "عن الكتاب",
-      icon: Iconsax.book,
-    ),
+    // MenuModel(
+    //   id: 1,
+    //   title: "عن الكتاب",
+    //   icon: Iconsax.book,
+    // ),
     MenuModel(
       id: 2,
       title: "عن المؤلف",
       icon: Iconsax.personalcard,
     ),
-    MenuModel(
-      id: 3,
-      title: "القنوات الدعوية",
-      icon: Iconsax.link_circle,
-    ),
+    // MenuModel(
+    //   id: 3,
+    //   title: "القنوات الدعوية",
+    //   icon: Iconsax.link_circle,
+    // ),
     MenuModel(
       id: 4,
       title: "المفضلة",
@@ -38,11 +38,11 @@ class AppLists {
       title: "شارك التطبيق",
       icon: Iconsax.share,
     ),
-    MenuModel(
-      id: 6,
-      title: "تقييم التطبيق",
-      icon: Iconsax.star,
-    ),
+    // MenuModel(
+    //   id: 6,
+    //   title: "تقييم التطبيق",
+    //   icon: Iconsax.star,
+    // ),
   ];
 
   // Table Of Contents

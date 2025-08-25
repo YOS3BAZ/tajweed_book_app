@@ -1,4 +1,4 @@
-package com.example.tajweed_book_app
+package com.tajweed.summary.book.app
 
 import io.flutter.embedding.android.FlutterActivity
 

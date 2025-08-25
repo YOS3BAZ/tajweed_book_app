@@ -68,7 +68,7 @@ class AppMenuView extends StatelessWidget {
               onTap: () {
                 if (Get.isBottomSheetOpen == true) {
                   Get.back();
-                  AppMenuController.instance.onItemTap(index + 1);
+                  AppMenuController.instance.onItemTap(item.id);
                 }
               },
             );

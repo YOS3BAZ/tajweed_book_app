@@ -13,7 +13,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.example.tajweed_book_app"
+    namespace = "com.tajweed.summary.book.app"
     // compileSdk = flutter.compileSdkVersion
     compileSdk = 36
     ndkVersion = flutter.ndkVersion

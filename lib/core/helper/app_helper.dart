@@ -38,7 +38,7 @@ class AppHelper {
       SnackBar(
         elevation: 2,
         margin: const EdgeInsets.all(AppSizes.md),
-        backgroundColor: isError ? AppColors.error : AppColors.primary,
+        backgroundColor: isError ? AppColors.error : AppColors.secondary,
         behavior: SnackBarBehavior.floating,
         duration: const Duration(seconds: 2),
         shape: RoundedRectangleBorder(
@@ -48,7 +48,7 @@ class AppHelper {
           message.toString(),
           style: Theme.of(Get.context!)
               .textTheme
-              .bodyLarge
+              .bodyMedium
               ?.copyWith(color: AppColors.white),
         ),
       ),

@@ -9,7 +9,7 @@ class AppTexts {
   static const String appDescription = "";
   // Share Text
   static const String shortAboutApp =
-      "📱 تطبيق كتاب *$appName*:\n\n $appDescription \n \n📥 *حمّل التطبيق الآن :*\n{PLAY_STORE_LINK}\n\n✅ ساهم في نشر التطبيق، فالدال على الخير كفاعله.";
+      "📱 تطبيق كتاب *$appName*:\n $appDescription \n \n📥 *حمّل التطبيق الآن :*\n{PLAY_STORE_LINK}";
 
   static final String shareAppText =
       shortAboutApp.replaceAll("{PLAY_STORE_LINK}", playStoreLink);

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:tajweed_book_app/core/constants/asset_strings.dart';
 import 'package:tajweed_book_app/core/constants/colors.dart';
 import 'package:tajweed_book_app/core/constants/sizes.dart';
 import 'package:tajweed_book_app/core/constants/text_strings.dart';
-import 'package:tajweed_book_app/core/helper/app_helper.dart';
-import 'package:tajweed_book_app/widgets/circle_image_button.dart';
 import 'package:tajweed_book_app/widgets/custom_dialog_template.dart';
 import 'package:tajweed_book_app/widgets/form_divider.dart';
 
@@ -36,7 +33,15 @@ class AboutAuthorView extends StatelessWidget {
               textAlign: TextAlign.center,
               softWrap: true,
             ),
-            const SizedBox(height: AppSizes.sm),
+            // const SizedBox(height: AppSizes.sm),
+            TFormDivider(
+              dividerText: "رحمه الله تعالى",
+              textStyle: Theme.of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(color: AppColors.secondary),
+            ),
+            /*
             TFormDivider(
               dividerText: "روابط التواصل",
               textStyle: Theme.of(context)
@@ -61,6 +66,7 @@ class AboutAuthorView extends StatelessWidget {
                 ),
               ],
             ),
+            */
           ],
         ));
   }
