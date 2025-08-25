@@ -107,7 +107,7 @@ class FahrasSearchView extends StatelessWidget {
                     ),
               ),
               onTap: () {
-                controller.jumpToPage(item.pageNumber - 1);
+                controller.jumpToPage(item.pageNumber);
                 searchController.closeView(null);
               },
             ),
