@@ -5,6 +5,8 @@ import 'package:tajweed_book_app/controllers/book_controller.dart';
 import 'package:tajweed_book_app/core/constants/colors.dart';
 import 'package:tajweed_book_app/core/constants/sizes.dart';
 import 'package:tajweed_book_app/core/constants/text_strings.dart';
+import 'package:tajweed_book_app/core/helper/app_helper.dart';
+import 'package:tajweed_book_app/core/helper/logger.dart';
 import 'package:tajweed_book_app/screens/fahras_search_view.dart';
 import 'package:tajweed_book_app/screens/fahras_view.dart';
 import 'package:tajweed_book_app/screens/go_to_page_view.dart';
@@ -54,6 +56,24 @@ class BookScreen extends StatelessWidget {
             },
           ),
           actions: [
+            IconButton(
+              onPressed: () async {
+                final doc = await controller.pdfController.document;
+                final docPage = await doc.getPage(controller.currentPage.value);
+
+                final img = await docPage.render(
+                  width: docPage.width,
+                  height: docPage.height,
+                );
+                await docPage.close();
+                if (img != null) {
+                  AppHelper.sharePdfPage(page: img);
+                }
+
+                AppLogger.debug("====================>>> ${img?.format.name}");
+              },
+              icon: const Icon(Iconsax.camera),
+            ),
             Obx(
               () => BookmarkButton(
                 onPressed: () => controller.toggleBookmark(),
