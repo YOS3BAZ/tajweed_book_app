@@ -24,9 +24,12 @@ class AppServices extends GetxService {
 
   String get pdfPathAssets => AppAssets.bookPdf;
 
+  int get lastPageNumber => prefs.getInt(_lastPageKey) ?? 0;
+
+  bool get isDarkMode => prefs.getBool(_darkModeKey) ?? false;
+
   Future<AppServices> init() async {
     prefs = await SharedPreferences.getInstance();
-    await loadPdf();
     loadBookmarks();
     checkForUpdate();
     return this;
@@ -48,19 +51,6 @@ class AppServices extends GetxService {
     });
   }
 
-  Future<void> loadPdf() async {
-    try {
-      final ByteData data = await rootBundle.load(pdfPathAssets);
-      pdfData = data.buffer.asUint8List();
-    } catch (e) {
-      Get.snackbar(
-        'خطأ',
-        'حدث خطأ أثناء تحميل الكتاب',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    }
-  }
-
   Future<void> saveLastPage(int pageIndex) async {
     await prefs.setInt(_lastPageKey, pageIndex);
   }
@@ -68,10 +58,6 @@ class AppServices extends GetxService {
   Future<void> saveDarkMode(bool isDark) async {
     await prefs.setBool(_darkModeKey, isDark);
   }
-
-  int get lastPageNumber => prefs.getInt(_lastPageKey) ?? 0;
-
-  bool get isDarkMode => prefs.getBool(_darkModeKey) ?? false;
 
   void loadBookmarks() {
     final savedBookmarks = prefs.getStringList(_bookmarkKey) ?? [];
