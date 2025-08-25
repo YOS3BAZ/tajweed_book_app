@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart' show SearchController;
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:pdfx/pdfx.dart';
-import 'package:tajweed_book_app/core/constants/asset_strings.dart';
+import 'package:pdfrx/pdfrx.dart';
 import 'package:tajweed_book_app/core/helper/app_helper.dart';
 import 'package:tajweed_book_app/core/services/services.dart';
 import 'package:tajweed_book_app/models/section_model.dart';
@@ -13,8 +11,9 @@ class BookController extends GetxController {
   static BookController get instance => Get.find();
 
   final AppServices _pdfService = AppServices.instance;
-  final Completer<PdfController> completer = Completer<PdfController>();
-  late PdfController pdfController;
+  final Completer<PdfViewerController> completer =
+      Completer<PdfViewerController>();
+  late PdfViewerController pdfController;
   late PdfDocument pdfDocument;
   final SearchController searchController = SearchController();
 
@@ -34,14 +33,14 @@ class BookController extends GetxController {
   }
 
   void jumpToPage(int page) async {
-    pdfController.jumpToPage(page);
+    await pdfController.goToPage(pageNumber: page);
   }
 
   void nextPage() async {
     if (currentPage.value < totalPages.value) {
-      await pdfController.nextPage(
+      await pdfController.goToPage(
+        pageNumber: currentPage.value + 1,
         duration: const Duration(milliseconds: 400),
-        curve: Curves.linearToEaseOut,
       );
     } else {
       AppHelper.showSnackBar(message: "هذه هي الصفحة الأخيرة");
@@ -50,9 +49,9 @@ class BookController extends GetxController {
 
   void previousPage() async {
     if (currentPage.value > 1) {
-      await pdfController.previousPage(
+      await pdfController.goToPage(
+        pageNumber: currentPage.value - 1,
         duration: const Duration(milliseconds: 400),
-        curve: Curves.linearToEaseOut,
       );
     } else {
       AppHelper.showSnackBar(message: "أنت الآن في الصفحة الأولى");
@@ -89,10 +88,7 @@ class BookController extends GetxController {
     favorites = _pdfService.bookmarks;
     currentPage.value = _pdfService.lastPageNumber;
     isDarkMode.value = _pdfService.isDarkMode;
-    pdfController = PdfController(
-      document: PdfDocument.openAsset(AppAssets.bookPdf),
-      initialPage: currentPage.value,
-    );
+    pdfController = PdfViewerController();
   }
 
   @override

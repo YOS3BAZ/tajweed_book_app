@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:pdfx/pdfx.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:tajweed_book_app/core/constants/text_strings.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -80,25 +79,25 @@ class AppHelper {
     }
   }
 
-  static Future<void> sharePdfPage({
-    required PdfPageImage page,
-    String? title,
-    String? text,
-  }) async {
-    try {
-      await SharePlus.instance.share(
-        ShareParams(
-          title: title,
-          text: text ?? AppTexts.shareAppText,
-          files: [
-            XFile.fromData(page.bytes, mimeType: "image/${page.format.name}")
-          ],
-        ),
-      );
-    } catch (_) {
-      showSnackBar(message: "تعذر المشاركة", isError: true);
-    }
-  }
+  // static Future<void> sharePdfPage({
+  //   required PdfPageImage page,
+  //   String? title,
+  //   String? text,
+  // }) async {
+  //   try {
+  //     await SharePlus.instance.share(
+  //       ShareParams(
+  //         title: title,
+  //         text: text ?? AppTexts.shareAppText,
+  //         files: [
+  //           XFile.fromData(page.bytes, mimeType: "image/${page.format.name}")
+  //         ],
+  //       ),
+  //     );
+  //   } catch (_) {
+  //     showSnackBar(message: "تعذر المشاركة", isError: true);
+  //   }
+  // }
 
   static Future<void> shareImageFromBytes({
     String? title,

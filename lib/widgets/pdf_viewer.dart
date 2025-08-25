@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pdfx/pdfx.dart';
+import 'package:pdfrx/pdfrx.dart';
 import 'package:tajweed_book_app/controllers/book_controller.dart';
+import 'package:tajweed_book_app/core/constants/asset_strings.dart';
 import 'package:tajweed_book_app/core/helper/logger.dart';
 
 class PDFViewerWidget extends StatelessWidget {
@@ -16,26 +17,34 @@ class PDFViewerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PdfView(
+    return PdfViewer.asset(
+      AppAssets.bookPdf,
       controller: controller.pdfController,
-      backgroundDecoration:
-          BoxDecoration(color: backgroundColor ?? Colors.white),
-      onDocumentLoaded: (document) {
-        controller.totalPages.value = document.pagesCount;
-        controller.isReady.value = true;
-        if (!controller.completer.isCompleted) {
-          controller.completer.complete(controller.pdfController);
-          controller.pdfDocument = document;
-        }
-        AppLogger.info("onDocumentLoaded: pages => ${document.pagesCount}");
-      },
-      onDocumentError: (error) {
-        AppLogger.error(error.toString());
-      },
-      onPageChanged: (page) {
-        controller.onPageChanged(page);
-        AppLogger.info("current page : $page");
-      },
+      initialPageNumber: controller.currentPage.value,
+      params: PdfViewerParams(
+      
+        backgroundColor: backgroundColor ?? Colors.white,
+        enableTextSelection: true,
+        scaleEnabled: true,
+        panEnabled: true,
+        panAxis: PanAxis.horizontal,
+        onViewerReady: (document, con) {
+          controller.totalPages.value = document.pages.length;
+          controller.isReady.value = true;
+          if (!controller.completer.isCompleted) {
+            controller.completer.complete(controller.pdfController);
+            controller.pdfDocument = document;
+          }
+          AppLogger.info("onDocumentLoaded: pages => ${document.pages.length}");
+        },
+        // onDocumentError: (error) {
+        //   AppLogger.error(error.toString());
+        // },
+        onPageChanged: (page) {
+          controller.onPageChanged(page ?? 0);
+          AppLogger.info("current page : $page");
+        },
+      ),
     );
   }
 }
