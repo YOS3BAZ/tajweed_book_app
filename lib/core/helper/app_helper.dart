@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:pdfx/pdfx.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:tajweed_book_app/core/constants/text_strings.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -79,39 +80,44 @@ class AppHelper {
     }
   }
 
-  static List<TextSpan> parseTextSpan({
-    required String message,
-    TextStyle? headlineStyle,
-    TextStyle? bodyStyle,
-  }) {
-    List<TextSpan> spans = [];
-    RegExp regex = RegExp(r'\*\*(.*?)\*\*');
-    int lastIndex = 0;
-
-    // Find all matches
-    for (RegExpMatch match in regex.allMatches(message)) {
-      // Add the text before the match
-      if (match.start > lastIndex) {
-        spans.add(TextSpan(
-            text: message.substring(lastIndex, match.start), style: bodyStyle));
-      }
-
-      // Add the bold text
-      spans.add(
-        TextSpan(
-          text: match.group(1),
-          style: headlineStyle,
+  static Future<void> sharePdfPage({
+    required PdfPageImage page,
+    String? title,
+    String? text,
+  }) async {
+    try {
+      await SharePlus.instance.share(
+        ShareParams(
+          title: title,
+          text: text ?? AppTexts.shareAppText,
+          files: [
+            XFile.fromData(page.bytes, mimeType: "image/${page.format.name}")
+          ],
         ),
       );
-
-      lastIndex = match.end;
+    } catch (_) {
+      showSnackBar(message: "تعذر المشاركة", isError: true);
     }
+  }
 
-    // Add the remaining text after the last match
-    if (lastIndex < message.length) {
-      spans.add(TextSpan(text: message.substring(lastIndex)));
+  static Future<void> shareImageFromBytes({
+    String? title,
+    required String text,
+    required Uint8List bytes,
+  }) async {
+    try {
+      await SharePlus.instance.share(
+        ShareParams(
+          title: title,
+          text: text.toString(),
+          subject: "SUUUUUBJEECT",
+          files: [
+            XFile.fromData(bytes),
+          ],
+        ),
+      );
+    } catch (_) {
+      showSnackBar(message: "تعذر المشاركة", isError: true);
     }
-
-    return spans;
   }
 }
