@@ -41,16 +41,37 @@ class FahrasView extends StatelessWidget {
               final item = AppLists.tableOfContents[index];
               return Card(
                 elevation: 0,
-                color: Colors.transparent,
-                margin: EdgeInsets.only(
-                  right: item.type != 1 ? item.type * AppSizes.sm : 0,
+                color: fahrasController.currentIndex + 1 == item.id
+                    ? AppColors.secondary.withOpacity(0.06)
+                    : AppColors.white,
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 0,
                 ),
+                shape: fahrasController.currentIndex + 1 == item.id
+                    ? RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: AppColors.secondary.withOpacity(0.4),
+                          width: 0.5,
+                        ),
+                        // borderRadius:
+                        //     BorderRadius.circular(AppSizes.borderRadiusLg),
+                      )
+                    : null,
+
+                // margin: EdgeInsets.only(
+                //   right: item.type != 1 ? item.type * AppSizes.sm : 0,
+                // ),
                 child: ListTile(
-                  tileColor:
-                      // controller.currentPage.value == (item.pageNumber - 1)
-                      fahrasController.currentIndex + 1 == item.id
-                          ? AppColors.accent
-                          : AppColors.white,
+                  minVerticalPadding: 14,
+                  contentPadding: EdgeInsets.only(
+                    right:
+                        (item.type != 1 ? item.type * (AppSizes.sm * 1.2) : 0) +
+                            AppSizes.xs,
+                  ),
+                  tileColor: Colors.transparent,
+                  // tileColor: fahrasController.currentIndex + 1 == item.id
+                  //     ? AppColors.secondary.withOpacity(0.1)
+                  //     : AppColors.white,
                   leading: item.type != 3
                       ? Icon(
                           item.type == 1
@@ -83,7 +104,7 @@ class FahrasView extends StatelessWidget {
                         ),
                   ),
                   onTap: () {
-                    controller.jumpToPage(item.pageNumber - 1);
+                    controller.jumpToPage(item.pageNumber);
                     if (Get.isBottomSheetOpen == true) {
                       Get.back();
                     }
