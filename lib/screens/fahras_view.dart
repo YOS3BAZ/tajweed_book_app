@@ -17,8 +17,6 @@ class FahrasView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // controller.scrollToLastItem();
-
     final FahrasController fahrasController = Get.put(FahrasController());
 
     return Column(
@@ -39,18 +37,20 @@ class FahrasView extends StatelessWidget {
             itemCount: AppLists.tableOfContents.length,
             itemBuilder: (context, index) {
               final item = AppLists.tableOfContents[index];
+              final bool itemSelected =
+                  fahrasController.currentIndex == item.id;
               return Card(
                 elevation: 0,
-                color: fahrasController.currentIndex + 1 == item.id
-                    ? AppColors.secondary.withOpacity(0.06)
+                color: itemSelected
+                    ? AppColors.primary.withOpacity(0.05)
                     : AppColors.white,
                 margin: const EdgeInsets.symmetric(
                   horizontal: 0,
                 ),
-                shape: fahrasController.currentIndex + 1 == item.id
+                shape: itemSelected
                     ? RoundedRectangleBorder(
                         side: BorderSide(
-                          color: AppColors.secondary.withOpacity(0.4),
+                          color: AppColors.primary.withOpacity(0.4),
                           width: 0.5,
                         ),
                         // borderRadius:
@@ -66,10 +66,10 @@ class FahrasView extends StatelessWidget {
                   contentPadding: EdgeInsets.only(
                     right:
                         (item.type != 1 ? item.type * (AppSizes.sm * 1.2) : 0) +
-                            AppSizes.xs,
+                            AppSizes.sm,
                   ),
                   tileColor: Colors.transparent,
-                  // tileColor: fahrasController.currentIndex + 1 == item.id
+                  // tileColor: itemSelected
                   //     ? AppColors.secondary.withOpacity(0.1)
                   //     : AppColors.white,
                   leading: item.type != 3

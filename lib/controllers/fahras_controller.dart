@@ -14,32 +14,25 @@ class FahrasController extends GetxController {
       ScrollOffsetController();
   late int currentIndex;
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //   });
-  // }
-
   int get getCurrentIndex {
     final curentId = AppServices.instance
         .getSectionByPage(_bookController.currentPage.value)
         .id;
-    final int cuIndex = curentId > 0 ? curentId - 1 : 0;
+    final int cuIndex = curentId > 0 ? curentId : 0;
     return cuIndex;
   }
 
   void scrollToLastItem() {
-    if (currentIndex > 20) {
+    final ii = currentIndex > 0 ? currentIndex - 1 : 0;
+    if (ii > 20) {
       itemScrollController.scrollTo(
         alignment: 0.1,
-        index: currentIndex,
+        index: ii,
         duration: const Duration(seconds: 1),
         curve: Curves.easeInOutCubic,
       );
     } else {
-      itemScrollController.jumpTo(index: currentIndex);
+      itemScrollController.jumpTo(index: ii);
     }
   }
 
