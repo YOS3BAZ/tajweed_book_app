@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart' show SearchController;
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:tajweed_book_app/core/constants/asset_strings.dart';
@@ -37,16 +38,22 @@ class BookController extends GetxController {
   }
 
   void nextPage() async {
-    if (currentPage.value < totalPages.value - 1) {
-      pdfController.jumpToPage(currentPage.value + 1);
+    if (currentPage.value < totalPages.value) {
+      await pdfController.nextPage(
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeInBack,
+      );
     } else {
       AppHelper.showSnackBar(message: "هذه هي الصفحة الأخيرة");
     }
   }
 
   void previousPage() async {
-    if (currentPage.value > 0) {
-      pdfController.jumpToPage(currentPage.value - 1);
+    if (currentPage.value > 1) {
+      await pdfController.previousPage(
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeOutBack,
+      );
     } else {
       AppHelper.showSnackBar(message: "أنت الآن في الصفحة الأولى");
     }
@@ -77,7 +84,7 @@ class BookController extends GetxController {
 
   // -- On Init --
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
     favorites = _pdfService.bookmarks;
     currentPage.value = _pdfService.lastPageNumber;
