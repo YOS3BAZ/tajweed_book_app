@@ -41,7 +41,7 @@ class BookController extends GetxController {
     if (currentPage.value < totalPages.value) {
       await pdfController.nextPage(
         duration: const Duration(milliseconds: 400),
-        curve: Curves.easeInBack,
+        curve: Curves.linearToEaseOut,
       );
     } else {
       AppHelper.showSnackBar(message: "هذه هي الصفحة الأخيرة");
@@ -52,7 +52,7 @@ class BookController extends GetxController {
     if (currentPage.value > 1) {
       await pdfController.previousPage(
         duration: const Duration(milliseconds: 400),
-        curve: Curves.easeOutBack,
+        curve: Curves.linearToEaseOut,
       );
     } else {
       AppHelper.showSnackBar(message: "أنت الآن في الصفحة الأولى");

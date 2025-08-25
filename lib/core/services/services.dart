@@ -110,7 +110,7 @@ class AppServices extends GetxService {
   }
 
   SectionModel getSectionByPage(int page) {
-    final int pageNumber = page + 1;
+    final int pageNumber = page;
     final fahrasItem = AppLists.tableOfContents.firstWhere(
       (e) => pageNumber >= e.pageNumber && pageNumber <= e.pageLastNumber,
       orElse: () => const SectionModel(id: 0, pageNumber: 0, title: ""),
