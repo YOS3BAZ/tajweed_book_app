@@ -7,6 +7,7 @@ import 'package:tajweed_book_app/core/constants/sizes.dart';
 import 'package:tajweed_book_app/core/constants/text_strings.dart';
 import 'package:tajweed_book_app/core/helper/app_helper.dart';
 import 'package:tajweed_book_app/core/helper/logger.dart';
+import 'package:tajweed_book_app/core/services/services.dart';
 import 'package:tajweed_book_app/screens/fahras_search_view.dart';
 import 'package:tajweed_book_app/screens/fahras_view.dart';
 import 'package:tajweed_book_app/screens/go_to_page_view.dart';
@@ -57,6 +58,7 @@ class BookScreen extends StatelessWidget {
           ),
           actions: [
             IconButton(
+              tooltip: "مشاركة الصفحة كصورة",
               onPressed: () async {
                 final doc = await controller.pdfController.document;
                 final docPage = await doc.getPage(controller.currentPage.value);
@@ -64,15 +66,22 @@ class BookScreen extends StatelessWidget {
                 final img = await docPage.render(
                   width: docPage.width,
                   height: docPage.height,
+                  backgroundColor: "#ffffff",
+                  quality: 100,
+                  // format: PdfPageImageFormat.jpeg,
+                  forPrint: true,
                 );
                 await docPage.close();
                 if (img != null) {
-                  AppHelper.sharePdfPage(page: img);
+                  AppHelper.sharePdfPage(
+                      page: img,
+                      text:
+                          "${AppServices.instance.getSectionByPage(controller.currentPage.value).title} - [ص ${controller.currentPage.value}] \n ${AppTexts.shareAppText}");
                 }
 
                 AppLogger.debug("====================>>> ${img?.format.name}");
               },
-              icon: const Icon(Iconsax.camera),
+              icon: const Icon(Iconsax.gallery_export),
             ),
             Obx(
               () => BookmarkButton(
